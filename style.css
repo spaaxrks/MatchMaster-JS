@@ -7,15 +7,50 @@ body{
 .root{
     display: flex;
     flex-wrap: wrap;
-    background-color: rgb(30, 176, 147);
-    width:35%;
+    /* background-color: rgb(30, 176, 147); */
+    width:40%;
     aspect-ratio: 1 / 1;
+    /* border: 1px black solid; */
+    perspective: 1000px;
 }
 
 .boxes{
-    width:calc(100%/4);
+    width:calc(100%/4 - 4px);
     aspect-ratio: 1 / 1;
     background-color: rgb(176, 142, 142);
     border: 1px black solid;
     box-sizing: border-box;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin: 2px;
+    border-radius: 5px;
+    transform: scale(1);
+    transform-style: preserve-3d;
+    transition: transform .5s;
 }
+
+.boxes:active{
+    transform: scale(.97);
+    transition: transform .20s;
+}
+.backface{
+    width: 60%;
+
+}
+.frontface{
+    width: 50%;
+    transform: rotateY(180deg);
+}
+
+.frontface,.backface{
+    position: absolute;
+    backface-visibility: hidden;
+}
+
+.boxes.flipped{
+    transform:rotateY(180deg);
+   
+}
+
