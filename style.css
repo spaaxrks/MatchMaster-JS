@@ -26,12 +26,13 @@ body{
     position: relative;
     margin: 2px;
     border-radius: 5px;
+
     transform: scale(1);
     transform-style: preserve-3d;
     transition: transform .5s;
 }
 
-.boxes:active{
+.boxes:active{                        /*  activates when clicked */
     transform: scale(.97);
     transition: transform .20s;
 }

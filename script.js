@@ -35,9 +35,11 @@ backimg={
     "31":"./favicon_io (2)/frontface.png","32":"./favicon_io (2)/frontface.png","33":"./favicon_io (2)/frontface.png","34":"./favicon_io (2)/frontface.png"
 }
 
+
 function putimages(pieces){
     for(let i in pieces){
         const box=document.getElementById(i);
+        box.dataset.framework=pieces[i]
 
         const front=document.createElement('img');
         front.classList.add("frontface");
@@ -57,8 +59,75 @@ putimages(pieces);
 const boxes = document.querySelectorAll(".boxes");
 boxes.forEach((box)=>{box.addEventListener("click",flipCard)})
 
+
+
+let hasflipped=false;
+let firstcard, secondcard;
+let lockboard=false;
+let matchcount=0;
+let chancescount=10;
+
+
 function flipCard(){
-    console.log("flipped")
+    if(lockboard===true){
+        return;
+    }
+    if(this===firstcard){
+        return;
+    }
+
     this.classList.toggle("flipped")            //this adds flipeed along with calss name
     
+    if(hasflipped===false){
+
+        hasflipped=true;
+        firstcard=this;
+    }
+    else{
+        secondcard=this;
+        console.log(firstcard);
+        console.log(secondcard);
+        checkmatch();
+        
+    }
+
+}
+
+function checkmatch(){
+
+    if(firstcard.dataset.framework === secondcard.dataset.framework){
+        match();
+
+    }else{
+        nomatch();
+        
+    }
+    
+}
+function match(){
+
+    firstcard.removeEventListener('click', flipCard);
+    secondcard.removeEventListener('click', flipCard);
+    reset();
+    matchcount++;
+    console.log(matchcount);
+
+
+}
+function nomatch(){
+    lockboard=true;
+    setTimeout(()=>{
+        firstcard.classList.remove('flipped');
+        secondcard.classList.remove('flipped');
+        reset();
+        chancescount--;
+        console.log(chancescount);
+        lockboard=false;
+    }, 1000);
+}
+
+function reset(){
+    hasflipped=false;
+    firstcard=null;
+    secondcard=null;
 }
