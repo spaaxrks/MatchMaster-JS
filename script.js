@@ -1,6 +1,36 @@
 let root=document.querySelector(".root");
 
+let matchcount=0;
+let chancescount=8;
+let matchdisplay, chancedisplay;
+
 function creategrid(){
+    const titlebox=document.createElement("div");
+    titlebox.classList.add("titlebox");
+
+    const title =document.createElement("h1");
+    title.innerText="MatchMaster-JS";
+    titlebox.append(title);
+
+    const countbox= document.createElement("div");
+    countbox.classList.add("countbox");
+
+    chancedisplay = document.createElement("p");
+    chancedisplay.innerText=`Chances left: ${chancescount}`;
+    countbox.append(chancedisplay);
+
+    matchdisplay = document.createElement("p");
+    matchdisplay.innerText=`Match Count: ${matchcount}`;
+    countbox.append(matchdisplay);
+
+    const restartbutton = document.createElement("button");
+    restartbutton.innerText="Play Again"
+    restartbutton.onclick= restart;
+    countbox.append(restartbutton);
+
+    titlebox.append(countbox);
+    
+    root.insertAdjacentElement("beforebegin",titlebox);
 
     for(let i=1;i<=3;i++){
         for(let j=1;j<=4;j++){
@@ -65,8 +95,7 @@ boxes.forEach((box)=>{box.addEventListener("click",flipCard)})
 let hasflipped=false;
 let firstcard, secondcard;
 let lockboard=false;
-let matchcount=0;
-let chancescount=10;
+
 
 
 function flipCard(){
@@ -96,6 +125,7 @@ function flipCard(){
 
 function checkmatch(){
 
+    
     if(firstcard.dataset.framework === secondcard.dataset.framework){
         match();
 
@@ -104,6 +134,7 @@ function checkmatch(){
         
     }
     
+    
 }
 function match(){
 
@@ -111,8 +142,9 @@ function match(){
     secondcard.removeEventListener('click', flipCard);
     reset();
     matchcount++;
+    matchdisplay.innerText=`Match Count: ${matchcount}`;
     console.log(matchcount);
-
+    checkgameStatus(matchcount,chancescount);
 
 }
 function nomatch(){
@@ -122,8 +154,10 @@ function nomatch(){
         secondcard.classList.remove('flipped');
         reset();
         chancescount--;
+        chancedisplay.innerText=`Chances left: ${chancescount}`;
         console.log(chancescount);
         lockboard=false;
+        checkgameStatus(matchcount,chancescount);
     }, 1000);
 }
 
@@ -155,4 +189,51 @@ function shufflePieceAndImages(pieces,frontimg){
     });
 
     
+}
+
+function checkgameStatus(matchcount,chancescount){
+    if(chancescount<=0){
+        setTimeout(() => {alert("😢 Game Over! Try Again.");},500)
+    }
+    if(matchcount>=6){
+       setTimeout(()=>{alert("🎉 You Win!");},500);
+    }
+}
+
+function restart(){
+
+matchcount=0;
+chancescount=8;
+hasflipped = false;
+lockboard = false;
+firstcard = null;
+secondcard = null;
+
+root.innerHTML = "";
+
+const prevTitleBox = document.querySelector(".titlebox");
+prevTitleBox.remove();
+
+// Shuffle the pieces and images
+shufflePieceAndImages(pieces, frontimg);
+
+// Rebuild the grid
+creategrid();
+
+
+// Put new images based on shuffled pieces
+putimages(pieces);
+
+
+// Attach new event listeners
+const boxes = document.querySelectorAll(".boxes");
+boxes.forEach(box => {
+    box.addEventListener("click", flipCard);
+    box.classList.remove("flipped");
+});
+
+// Update displayed counters
+matchdisplay.innerText = `Match Count: ${matchcount}`;
+chancedisplay.innerText = `Chances left: ${chancescount}`;
+
 }

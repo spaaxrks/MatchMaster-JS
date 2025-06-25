@@ -1,8 +1,32 @@
 body{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: rgb(27, 27, 70);
+}
+.titlebox h1{
+    margin-bottom: 0px;
+    color: rgb(223, 218, 218);
+}
+.titlebox{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    color: rgb(223, 218, 218);
+}
+.countbox{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+}
+.countbox button{
+    background-color:rgb(179, 63, 63) ;
+    color: rgb(223, 218, 218);
+    padding: 5px 10px;
 }
 .root{
     display: flex;
