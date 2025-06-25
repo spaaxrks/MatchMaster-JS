@@ -53,6 +53,7 @@ function putimages(pieces){
         
     }
 }
+shufflePieceAndImages(pieces,frontimg)
 putimages(pieces);
 
 
@@ -130,4 +131,28 @@ function reset(){
     hasflipped=false;
     firstcard=null;
     secondcard=null;
+}
+
+function shufflePieceAndImages(pieces,frontimg){
+
+    const keys = Object.keys(pieces);
+
+    const combined = keys.map((key)=>({
+        key:key,
+        name:pieces[key],
+        img:frontimg[key]
+    }));
+
+    for(let i=combined.length-1;i>0;i--){
+        const j = Math.floor(Math.random()*(i+1));
+        [combined[i],combined[j]] = [combined[j],combined[i]];
+    }
+
+    combined.forEach((item,index)=>{
+        const key = keys[index];
+        pieces[key] = item.name;
+        frontimg[key] = item.img;
+    });
+
+    
 }
