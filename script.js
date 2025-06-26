@@ -55,8 +55,8 @@ pieces = {
     "31":"swift","32":"html","33":"swift","34":"java"
 };
 frontimg={
-    "11":"./pieces-imges/python.png","12":"./pieces-imges/java-script.png","13":"./pieces-imges/programmer.png","14":"./pieces-imges/programmer.png",
-    "21":"./pieces-imges/java.png","22":"./pieces-imges/html.png","23":"./pieces-imges/python.png","24":"./pieces-imges/java-script.png",
+    "11":"./pieces-imges/python.png","12":"./pieces-imges/js.png","13":"./pieces-imges/c++.png","14":"./pieces-imges/c++.png",
+    "21":"./pieces-imges/java.png","22":"./pieces-imges/html.png","23":"./pieces-imges/python.png","24":"./pieces-imges/js.png",
     "31":"./pieces-imges/swift.png","32":"./pieces-imges/html.png","33":"./pieces-imges/swift.png","34":"./pieces-imges/java.png"
 };
 backimg={
@@ -136,6 +136,8 @@ function checkmatch(){
     
     
 }
+
+
 function match(){
 
     firstcard.removeEventListener('click', flipCard);
@@ -147,6 +149,8 @@ function match(){
     checkgameStatus(matchcount,chancescount);
 
 }
+
+
 function nomatch(){
     lockboard=true;
     setTimeout(()=>{
@@ -193,12 +197,19 @@ function shufflePieceAndImages(pieces,frontimg){
 
 function checkgameStatus(matchcount,chancescount){
     if(chancescount<=0){
-        setTimeout(() => {alert("😢 Game Over! Try Again.");},500)
+        setTimeout(() => {alert("😢 Game Over! Try Again.");
+            restart();
+        },500)
+        
     }
     if(matchcount>=6){
        setTimeout(()=>{alert("🎉 You Win!");},500);
     }
 }
+
+
+
+
 
 function restart(){
 
